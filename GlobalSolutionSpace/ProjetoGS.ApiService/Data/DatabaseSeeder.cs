@@ -1,18 +1,38 @@
 using Microsoft.EntityFrameworkCore;
 using ProjetoGS.ApiService.Models;
+using ProjetoGS.ApiService.Services;
 
 namespace ProjetoGS.ApiService.Data;
 
-public static class DatabaseSeeder
+public class DatabaseSeeder
 {
-    public static async Task SeedAsync(IServiceProvider serviceProvider)
+    private readonly AppDbContext _context;
+    private readonly IAuthService _authService;
+
+    public DatabaseSeeder(AppDbContext context, IAuthService authService)
     {
-        using var scope = serviceProvider.CreateScope();
-        var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        _context = context;
+        _authService = authService;
+    }
 
-        await context.Database.MigrateAsync();
+    public async Task SeedAsync()
+    {
+        await _context.Database.MigrateAsync();
 
-        if (!await context.Categorias.AnyAsync())
+        if (!await _context.Usuarios.AnyAsync())
+        {
+            var adminUser = new Usuario
+            {
+                Nome = "Administrador Chefe",
+                Email = "admin@novaeconomia.space",
+                SenhaHash = _authService.HashPassword("Admin@123"),
+                Perfil = "Administrador"
+            };
+            await _context.Usuarios.AddAsync(adminUser);
+            await _context.SaveChangesAsync();
+        }
+
+        if (!await _context.Categorias.AnyAsync())
         {
             var categorias = new List<CategoriaImpacto>
             {

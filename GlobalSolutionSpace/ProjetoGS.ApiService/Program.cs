@@ -27,10 +27,17 @@ builder.Services.AddScoped<IOrigemRepository, OrigemRepository>();
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddScoped<ProjetoGS.ApiService.Services.IAuthService, ProjetoGS.ApiService.Services.AuthService>();
 
+builder.Services.AddScoped<ProjetoGS.ApiService.Data.DatabaseSeeder>();
+
 var app = builder.Build();
 
-// Seed Database
-await ProjetoGS.ApiService.Data.DatabaseSeeder.SeedAsync(app.Services);
+app.MapDefaultEndpoints();
+
+using (var scope = app.Services.CreateScope())
+{
+    var seeder = scope.ServiceProvider.GetRequiredService<ProjetoGS.ApiService.Data.DatabaseSeeder>();
+    await seeder.SeedAsync();
+}
 
 // Configure the HTTP request pipeline.
 app.UseExceptionHandler();

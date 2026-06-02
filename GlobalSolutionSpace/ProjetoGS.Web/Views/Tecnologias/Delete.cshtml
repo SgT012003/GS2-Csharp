@@ -15,7 +15,7 @@
 
             <div class="bg-dark p-3 rounded mb-4">
                 <h5 class="text-white">@Model.Nome</h5>
-                <p class="text-secondary mb-1"><strong>Origem:</strong> @Model.OrigemEspacial</p>
+                <p class="text-secondary mb-1"><strong>Origem:</strong> @(Model.Origem?.Nome ?? "Desconhecido")</p>
                 <p class="text-secondary mb-0"><strong>Cadastrado em:</strong> @Model.DataCadastro.ToShortDateString()</p>
             </div>
 

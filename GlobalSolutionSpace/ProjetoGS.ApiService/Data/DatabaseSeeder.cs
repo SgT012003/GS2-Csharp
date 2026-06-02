@@ -26,9 +26,25 @@ public static class DatabaseSeeder
             await context.SaveChangesAsync();
         }
 
+        if (!await context.Origens.AnyAsync())
+        {
+            var origens = new List<Origem>
+            {
+                new Origem { Nome = "Missão Apollo", Descricao = "Programa espacial americano que levou o homem à Lua." },
+                new Origem { Nome = "Estação Espacial Internacional (ISS)", Descricao = "Laboratório espacial orbital colaborativo." },
+                new Origem { Nome = "Satélites de Observação", Descricao = "Satélites em órbita da Terra usados para monitoramento." },
+                new Origem { Nome = "Missão Artemis", Descricao = "Nova missão de exploração lunar da NASA." },
+                new Origem { Nome = "Sondas Interplanetárias", Descricao = "Naves não tripuladas enviadas para explorar o sistema solar." },
+                new Origem { Nome = "Outros", Descricao = "Outras origens espaciais." }
+            };
+            await context.Origens.AddRangeAsync(origens);
+            await context.SaveChangesAsync();
+        }
+
         if (!await context.Tecnologias.AnyAsync())
         {
             var categorias = await context.Categorias.ToListAsync();
+            var origens = await context.Origens.ToListAsync();
             
             var tecnologias = new List<Tecnologia>
             {
@@ -36,7 +52,7 @@ public static class DatabaseSeeder
                 { 
                     Nome = "Termômetros Infravermelhos", 
                     Descricao = "Desenvolvidos inicialmente para medir a temperatura de estrelas.", 
-                    OrigemEspacial = "Missão Apollo",
+                    OrigemId = origens.First(o => o.Nome == "Missão Apollo").Id,
                     CategoriaImpactoId = categorias.First(c => c.Nome == "Saúde Global").Id,
                     DataCadastro = DateTime.UtcNow.AddDays(-10)
                 },
@@ -44,7 +60,7 @@ public static class DatabaseSeeder
                 { 
                     Nome = "Purificador de Água", 
                     Descricao = "Sistema de filtragem criado para reciclar água em missões espaciais.", 
-                    OrigemEspacial = "Estação Espacial Internacional (ISS)",
+                    OrigemId = origens.First(o => o.Nome == "Estação Espacial Internacional (ISS)").Id,
                     CategoriaImpactoId = categorias.First(c => c.Nome == "Sustentabilidade").Id,
                     DataCadastro = DateTime.UtcNow.AddDays(-5)
                 },
@@ -52,7 +68,7 @@ public static class DatabaseSeeder
                 { 
                     Nome = "Sensores CMOS (Câmeras)", 
                     Descricao = "Câmeras miniaturizadas inicialmente para sondas espaciais.", 
-                    OrigemEspacial = "Satélites de Observação",
+                    OrigemId = origens.First(o => o.Nome == "Satélites de Observação").Id,
                     CategoriaImpactoId = categorias.First(c => c.Nome == "Comunicações").Id,
                     DataCadastro = DateTime.UtcNow.AddDays(-2)
                 }

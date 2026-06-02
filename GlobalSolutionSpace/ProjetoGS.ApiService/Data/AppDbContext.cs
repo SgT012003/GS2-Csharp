@@ -12,6 +12,7 @@ public class AppDbContext : DbContext
     public DbSet<Tecnologia> Tecnologias { get; set; }
     public DbSet<CategoriaImpacto> Categorias { get; set; }
     public DbSet<Usuario> Usuarios { get; set; }
+    public DbSet<Origem> Origens { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -15,17 +15,10 @@ public class TecnologiasController : Controller
         _httpClient = httpClientFactory.CreateClient("api");
     }
 
-    private List<SelectListItem> GetOrigensEspaciais()
+    private async Task PopulateOrigensViewBagAsync(int? selectedId = null)
     {
-        return new List<SelectListItem>
-        {
-            new SelectListItem { Value = "Missão Apollo", Text = "Missão Apollo" },
-            new SelectListItem { Value = "Estação Espacial Internacional (ISS)", Text = "Estação Espacial Internacional (ISS)" },
-            new SelectListItem { Value = "Satélites de Observação", Text = "Satélites de Observação" },
-            new SelectListItem { Value = "Missão Artemis", Text = "Missão Artemis" },
-            new SelectListItem { Value = "Sondas Interplanetárias", Text = "Sondas Interplanetárias" },
-            new SelectListItem { Value = "Outros", Text = "Outros" }
-        };
+        var origens = await _httpClient.GetFromJsonAsync<IEnumerable<OrigemDTO>>("/api/origens");
+        ViewBag.Origens = new SelectList(origens, "Id", "Nome", selectedId);
     }
 
     private async Task PopulateCategoriasViewBagAsync(int? selectedId = null)
@@ -42,7 +35,7 @@ public class TecnologiasController : Controller
 
     public async Task<IActionResult> Create()
     {
-        ViewBag.Origens = GetOrigensEspaciais();
+        await PopulateOrigensViewBagAsync();
         await PopulateCategoriasViewBagAsync();
         return View();
     }
@@ -62,7 +55,7 @@ public class TecnologiasController : Controller
             ModelState.AddModelError(string.Empty, "Erro ao criar registro na API.");
         }
 
-        ViewBag.Origens = GetOrigensEspaciais();
+        await PopulateOrigensViewBagAsync(model.OrigemId);
         await PopulateCategoriasViewBagAsync(model.CategoriaImpactoId);
         return View(model);
     }
@@ -72,7 +65,7 @@ public class TecnologiasController : Controller
         var tecnologia = await _httpClient.GetFromJsonAsync<TecnologiaDTO>($"/api/tecnologias/{id}");
         if (tecnologia == null) return NotFound();
 
-        ViewBag.Origens = GetOrigensEspaciais();
+        await PopulateOrigensViewBagAsync(tecnologia.OrigemId);
         await PopulateCategoriasViewBagAsync(tecnologia.CategoriaImpactoId);
         return View(tecnologia);
     }
@@ -93,7 +86,7 @@ public class TecnologiasController : Controller
             ModelState.AddModelError(string.Empty, "Erro ao atualizar registro na API.");
         }
 
-        ViewBag.Origens = GetOrigensEspaciais();
+        await PopulateOrigensViewBagAsync(model.OrigemId);
         await PopulateCategoriasViewBagAsync(model.CategoriaImpactoId);
         return View(model);
     }

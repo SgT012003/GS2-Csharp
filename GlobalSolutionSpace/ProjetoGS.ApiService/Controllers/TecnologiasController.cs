@@ -62,7 +62,13 @@ public class TecnologiasController : ControllerBase
             TotalTecnologias = tecnologias.Count(),
             PorSetor = tecnologias.GroupBy(t => t.CategoriaImpacto?.Nome ?? "Sem Categoria")
                                   .Select(g => new { Setor = g.Key, Quantidade = g.Count() }),
-            UltimasCadastradas = tecnologias.OrderByDescending(t => t.DataCadastro).Take(5)
+            UltimasCadastradas = tecnologias.OrderByDescending(t => t.DataCadastro).Take(5).Select(t => new
+            {
+                t.Id,
+                t.Nome,
+                OrigemNome = t.Origem?.Nome ?? "Desconhecido",
+                t.DataCadastro
+            })
         };
 
         return Ok(stats);

@@ -17,6 +17,6 @@ public class TecnologiaResumo
 {
     public int Id { get; set; }
     public string Nome { get; set; } = string.Empty;
-    public string OrigemEspacial { get; set; } = string.Empty;
+    public string OrigemNome { get; set; } = string.Empty;
     public DateTime DataCadastro { get; set; }
 }

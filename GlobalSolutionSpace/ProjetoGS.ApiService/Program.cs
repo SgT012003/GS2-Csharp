@@ -21,6 +21,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseMySql(connectionString, ServerVersion.Parse("8.0.36-mysql")));
 
 builder.Services.AddScoped<ITecnologiaRepository, TecnologiaRepository>();
+builder.Services.AddScoped<ProjetoGS.ApiService.Services.IAuthService, ProjetoGS.ApiService.Services.AuthService>();
 
 var app = builder.Build();
 

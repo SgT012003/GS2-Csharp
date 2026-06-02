@@ -12,7 +12,7 @@ public static class DatabaseSeeder
 
         await context.Database.MigrateAsync();
 
-        if (!await context.CategoriasImpacto.AnyAsync())
+        if (!await context.Categorias.AnyAsync())
         {
             var categorias = new List<CategoriaImpacto>
             {
@@ -22,13 +22,13 @@ public static class DatabaseSeeder
                 new CategoriaImpacto { Nome = "Sustentabilidade", Descricao = "Gerenciamento de recursos naturais e energia" }
             };
 
-            await context.CategoriasImpacto.AddRangeAsync(categorias);
+            await context.Categorias.AddRangeAsync(categorias);
             await context.SaveChangesAsync();
         }
 
         if (!await context.Tecnologias.AnyAsync())
         {
-            var categorias = await context.CategoriasImpacto.ToListAsync();
+            var categorias = await context.Categorias.ToListAsync();
             
             var tecnologias = new List<Tecnologia>
             {

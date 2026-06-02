@@ -1,0 +1,52 @@
+@model IEnumerable<ProjetoGS.Web.Models.OrigemDTO>
+
+@{
+    ViewData["Title"] = "Origens Espaciais";
+}
+
+<div class="row mb-4 mt-4 animate-fade-up">
+    <div class="col d-flex justify-content-between align-items-center">
+        <div>
+            <h2 class="display-6 fw-bold mb-1"><span class="text-gradient"><i class="bi bi-rocket-takeoff me-2"></i>Gestão de Origens</span></h2>
+            <p class="lead text-secondary">Administre as missões, satélites e estações de origem.</p>
+        </div>
+        <a asp-action="Create" class="btn btn-primary rounded-pill px-4 shadow-sm">
+            <i class="bi bi-plus-lg me-1"></i> Nova Origem
+        </a>
+    </div>
+</div>
+
+<div class="row animate-fade-up delay-100">
+    <div class="col-12">
+        <div class="glass-card p-0 overflow-hidden">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th class="ps-4">ID</th>
+                            <th>Nome da Origem</th>
+                            <th>Descrição</th>
+                            <th class="pe-4 text-end">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model) {
+                            <tr>
+                                <td class="ps-4"><span class="badge bg-primary text-white">#@item.Id</span></td>
+                                <td class="fw-semibold text-white">@item.Nome</td>
+                                <td class="text-secondary text-truncate" style="max-width: 300px;">@item.Descricao</td>
+                                <td class="pe-4 text-end">
+                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary rounded-pill me-1"><i class="bi bi-pencil"></i></a>
+                                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger rounded-pill"><i class="bi bi-trash"></i></a>
+                                </td>
+                            </tr>
+                        }
+                        @if(!Model.Any()){
+                            <tr><td colspan="4" class="text-center text-secondary py-5">Nenhuma origem cadastrada.</td></tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

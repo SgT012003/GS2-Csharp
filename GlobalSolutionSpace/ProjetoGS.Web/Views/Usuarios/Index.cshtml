@@ -4,31 +4,31 @@
     ViewData["Title"] = "Gestão de Usuários";
 }
 
-<div class="row mb-4 mt-3">
+<div class="row mb-4 mt-4 animate-fade-up">
     <div class="col">
-        <h2 class="display-6 fw-bold text-primary"><i class="bi bi-people me-2"></i>Gestão de Usuários</h2>
-        <p class="lead text-secondary">Apenas administradores podem promover ou rebaixar contas.</p>
+        <h2 class="display-6 fw-bold mb-1"><span class="text-gradient"><i class="bi bi-people me-2"></i>Controle de Acessos</span></h2>
+        <p class="lead text-secondary">Promova pesquisadores ou gerencie privilégios administrativos.</p>
     </div>
 </div>
 
 @if (TempData["SuccessMessage"] != null)
 {
-    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+    <div class="alert alert-success animate-fade-up shadow-sm border-0 mb-4">@TempData["SuccessMessage"]</div>
 }
 @if (TempData["ErrorMessage"] != null)
 {
-    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+    <div class="alert alert-danger animate-fade-up shadow-sm border-0 mb-4">@TempData["ErrorMessage"]</div>
 }
 
-<div class="row">
+<div class="row animate-fade-up delay-100">
     <div class="col-12">
         <div class="glass-card p-0 overflow-hidden">
             <div class="table-responsive">
-                <table class="table table-hover table-striped mb-0 align-middle">
-                    <thead class="bg-dark text-uppercase">
+                <table class="table table-hover mb-0">
+                    <thead>
                         <tr>
                             <th class="ps-4">ID</th>
-                            <th>Nome</th>
+                            <th>Pesquisador / Colaborador</th>
                             <th>E-mail</th>
                             <th>Perfil Atual</th>
                             <th class="pe-4 text-end">Ações</th>
@@ -38,17 +38,17 @@
                         @foreach (var user in Model)
                         {
                             <tr>
-                                <td class="ps-4 fw-semibold text-white">#@user.Id</td>
-                                <td>@user.Nome</td>
-                                <td class="text-secondary">@user.Email</td>
+                                <td class="ps-4"><span class="badge bg-primary text-white">#@user.Id</span></td>
+                                <td class="fw-semibold text-white" style="font-size: 1.05rem;">@user.Nome</td>
+                                <td class="text-secondary"><i class="bi bi-envelope me-2"></i>@user.Email</td>
                                 <td>
                                     @if(user.Perfil == "Administrador")
                                     {
-                                        <span class="badge bg-danger">@user.Perfil</span>
+                                        <span class="badge px-3 py-2 text-white" style="background: rgba(244, 63, 94, 0.2); border: 1px solid rgba(244, 63, 94, 0.4);"><i class="bi bi-shield-check me-1"></i> Admin</span>
                                     }
                                     else
                                     {
-                                        <span class="badge bg-primary">@user.Perfil</span>
+                                        <span class="badge px-3 py-2 text-white" style="background: rgba(16, 185, 129, 0.2); border: 1px solid rgba(16, 185, 129, 0.4);"><i class="bi bi-person me-1"></i> @user.Perfil</span>
                                     }
                                 </td>
                                 <td class="pe-4 text-end">
@@ -57,15 +57,15 @@
                                         @if(user.Perfil == "Pesquisador")
                                         {
                                             <input type="hidden" name="perfil" value="Administrador" />
-                                            <button type="submit" class="btn btn-sm btn-outline-danger">
-                                                <i class="bi bi-arrow-up-circle"></i> Promover Admin
+                                            <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill px-3">
+                                                <i class="bi bi-arrow-up-circle me-1"></i> Promover Admin
                                             </button>
                                         }
                                         else
                                         {
                                             <input type="hidden" name="perfil" value="Pesquisador" />
-                                            <button type="submit" class="btn btn-sm btn-outline-secondary">
-                                                <i class="bi bi-arrow-down-circle"></i> Rebaixar
+                                            <button type="submit" class="btn btn-sm btn-outline-secondary rounded-pill px-3">
+                                                <i class="bi bi-arrow-down-circle me-1"></i> Rebaixar
                                             </button>
                                         }
                                     </form>

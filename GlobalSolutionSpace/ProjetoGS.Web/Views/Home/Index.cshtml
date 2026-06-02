@@ -1,123 +1,37 @@
-@model ProjetoGS.Web.Models.DashboardViewModel
-@using System.Text.Json
-
 @{
-    ViewData["Title"] = "Dashboard - A Nova Economia Espacial";
+    ViewData["Title"] = "Início";
 }
 
-<div class="row mb-4 mt-3">
-    <div class="col">
-        <h1 class="display-5 fw-bold text-primary"><i class="bi bi-globe-americas me-2"></i>A Nova Economia Espacial</h1>
-        <p class="lead text-secondary">Painel Administrativo de Inovações e Impacto Terrestre</p>
-    </div>
-</div>
-
-<div class="row g-4 mb-5">
-    <div class="col-md-4">
-        <div class="glass-card text-center h-100 d-flex flex-column justify-content-center">
-            <h5 class="text-uppercase fw-bold text-secondary mb-3">Total de Tecnologias</h5>
-            <h2 class="display-1 fw-bold text-primary mb-0">@Model.TotalTecnologias</h2>
+<div class="d-flex flex-column justify-content-center align-items-center text-center min-vh-100 pb-5">
+    <div class="animate-fade-up">
+        <div class="badge bg-primary text-white px-3 py-2 mb-4" style="font-size: 0.9rem; letter-spacing: 2px;">
+            <i class="bi bi-stars me-2"></i> INOVAÇÃO ALÉM DA ÓRBITA
         </div>
-    </div>
-    
-    <div class="col-md-8">
-        <div class="glass-card h-100">
-            <h5 class="fw-bold text-secondary mb-4">Impacto por Setor (Distribuição)</h5>
-            <div id="impactChart"></div>
-            @if (!Model.PorSetor.Any())
+        
+        <h1 class="display-1 fw-bold mb-4" style="line-height: 1.1; letter-spacing: -2px;">
+            A Nova <span class="text-gradient d-block">Economia Espacial</span>
+        </h1>
+        
+        <p class="lead text-secondary mx-auto mb-5" style="max-width: 600px; font-size: 1.25rem;">
+            Explore e gerencie o catálogo definitivo de tecnologias que transcenderam missões espaciais e agora moldam o futuro sustentável na Terra.
+        </p>
+
+        <div class="d-flex justify-content-center gap-3">
+            @if (User.Identity?.IsAuthenticated == true)
             {
-                <p class="text-muted fst-italic text-center mt-4">Nenhum dado cadastrado.</p>
+                <a asp-controller="Home" asp-action="Dashboard" class="btn btn-primary btn-lg px-5 py-3 rounded-pill" style="font-size: 1.1rem;">
+                    Acessar Plataforma <i class="bi bi-arrow-right ms-2"></i>
+                </a>
+            }
+            else
+            {
+                <a asp-controller="Auth" asp-action="Login" class="btn btn-primary btn-lg px-5 py-3 rounded-pill" style="font-size: 1.1rem;">
+                    Acessar Plataforma <i class="bi bi-arrow-right ms-2"></i>
+                </a>
+                <a asp-controller="Auth" asp-action="Register" class="btn btn-outline-primary btn-lg px-5 py-3 rounded-pill" style="font-size: 1.1rem;">
+                    Criar Conta
+                </a>
             }
         </div>
     </div>
 </div>
-
-<div class="row">
-    <div class="col-12">
-        <div class="glass-card p-0 overflow-hidden">
-            <div class="p-4 border-bottom" style="border-color: var(--border-color) !important;">
-                <h5 class="fw-bold mb-0">Últimos Cadastros Realizados</h5>
-            </div>
-            <div class="table-responsive">
-                <table class="table table-hover table-striped mb-0 align-middle">
-                    <thead class="bg-dark text-uppercase">
-                        <tr>
-                            <th class="ps-4">ID</th>
-                            <th>Nome da Tecnologia</th>
-                            <th>Origem Espacial</th>
-                            <th class="pe-4">Data de Cadastro</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var tech in Model.UltimasCadastradas)
-                        {
-                            <tr>
-                                <td class="ps-4"><span class="badge bg-primary">#@tech.Id</span></td>
-                                <td class="fw-semibold text-white">@tech.Nome</td>
-                                <td><i class="bi bi-rocket me-1"></i> @tech.OrigemNome</td>
-                                <td class="text-secondary pe-4">@tech.DataCadastro.ToString("dd/MM/yyyy HH:mm")</td>
-                            </tr>
-                        }
-                        @if (!Model.UltimasCadastradas.Any())
-                        {
-                            <tr>
-                                <td colspan="4" class="text-center text-secondary py-4">
-                                    Nenhum cadastro encontrado.
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
-
-@section Scripts {
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            var chartData = @Html.Raw(JsonSerializer.Serialize(Model.PorSetor.Select(s => s.Quantidade)));
-            var chartLabels = @Html.Raw(JsonSerializer.Serialize(Model.PorSetor.Select(s => s.Setor)));
-
-            if (chartData.length > 0) {
-                var options = {
-                    series: chartData,
-                    labels: chartLabels,
-                    chart: {
-                        type: 'donut',
-                        height: 300,
-                        background: 'transparent'
-                    },
-                    theme: {
-                        mode: 'dark'
-                    },
-                    colors: ['#3b82f6', '#10b981', '#f59e0b', '#8b5cf6', '#ef4444'],
-                    plotOptions: {
-                        pie: {
-                            donut: {
-                                size: '70%',
-                                background: 'transparent'
-                            }
-                        }
-                    },
-                    stroke: {
-                        show: true,
-                        colors: 'transparent',
-                        width: 2
-                    },
-                    dataLabels: {
-                        enabled: false
-                    },
-                    legend: {
-                        position: 'right',
-                        offsetY: 0,
-                        height: 230,
-                    }
-                };
-
-                var chart = new ApexCharts(document.querySelector("#impactChart"), options);
-                chart.render();
-            }
-        });
-    </script>
-}

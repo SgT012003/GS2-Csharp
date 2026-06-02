@@ -13,23 +13,22 @@ public class HomeController : Controller
         _httpClient = httpClientFactory.CreateClient("api");
     }
 
-    public async Task<IActionResult> Index()
+    public IActionResult Index()
     {
-        DashboardViewModel? stats = null;
-        try
+        return View();
+    }
+
+    [Authorize]
+    public async Task<IActionResult> Dashboard()
+    {
+        var response = await _httpClient.GetAsync("/api/tecnologias/stats");
+        if (response.IsSuccessStatusCode)
         {
-            var response = await _httpClient.GetAsync("/api/tecnologias/stats");
-            if (response.IsSuccessStatusCode)
-            {
-                stats = await response.Content.ReadFromJsonAsync<DashboardViewModel>();
-            }
-        }
-        catch (Exception)
-        {
-            // API not available yet or DB error
+            var stats = await response.Content.ReadFromJsonAsync<DashboardViewModel>();
+            return View(stats ?? new DashboardViewModel());
         }
 
-        return View(stats ?? new DashboardViewModel());
+        return View(new DashboardViewModel());
     }
 
     public IActionResult Privacy()

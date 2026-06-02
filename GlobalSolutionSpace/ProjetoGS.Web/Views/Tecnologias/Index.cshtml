@@ -4,49 +4,60 @@
     ViewData["Title"] = "Gerenciamento de Tecnologias";
 }
 
-<div class="d-flex justify-content-between align-items-center mb-4 mt-3">
-    <h2 class="mb-0 fw-bold"><i class="bi bi-cpu text-primary me-2"></i>Tecnologias Espaciais</h2>
-    <a asp-action="Create" class="btn btn-primary"><i class="bi bi-plus-lg me-1"></i> Nova Tecnologia</a>
+<div class="row mb-4 mt-4 animate-fade-up">
+    <div class="col d-flex justify-content-between align-items-center">
+        <div>
+            <h2 class="display-6 fw-bold mb-1"><span class="text-gradient"><i class="bi bi-cpu me-2"></i>Tecnologias Espaciais</span></h2>
+            <p class="lead text-secondary">Catálogo de inovações terrestres derivadas da exploração espacial.</p>
+        </div>
+        <a asp-action="Create" class="btn btn-primary rounded-pill px-4 shadow-sm">
+            <i class="bi bi-plus-lg me-1"></i> Nova Tecnologia
+        </a>
+    </div>
 </div>
 
-<div class="glass-card p-0 overflow-hidden">
-    <div class="table-responsive">
-        <table class="table table-hover table-striped mb-0 align-middle">
-            <thead class="bg-dark text-uppercase">
-                <tr>
-                    <th class="ps-4">Nome</th>
-                    <th>Categoria de Impacto</th>
-                    <th>Origem Espacial</th>
-                    <th>Data de Cadastro</th>
-                    <th class="text-end pe-4">Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (Model != null && Model.Any())
-                {
-                    foreach (var item in Model)
-                    {
+<div class="row animate-fade-up delay-100">
+    <div class="col-12">
+        <div class="glass-card p-0 overflow-hidden">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead>
                         <tr>
-                            <td class="ps-4 fw-semibold text-white">@item.Nome</td>
-                            <td><span class="badge bg-secondary">@(item.CategoriaImpacto?.Nome ?? "N/A")</span></td>
-                            <td><i class="bi bi-rocket-takeoff text-white-50 me-1"></i> @(item.Origem?.Nome ?? "Desconhecido")</td>
-                            <td>@item.DataCadastro.ToShortDateString()</td>
-                            <td class="text-end pe-4">
-                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-warning me-2"><i class="bi bi-pencil-square"></i></a>
-                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash3"></i></a>
-                            </td>
+                            <th class="ps-4">Nome da Inovação</th>
+                            <th>Categoria de Impacto</th>
+                            <th>Origem Espacial</th>
+                            <th>Cadastro</th>
+                            <th class="text-end pe-4">Ações</th>
                         </tr>
-                    }
-                }
-                else
-                {
-                    <tr>
-                        <td colspan="5" class="text-center py-4 text-secondary">
-                            Nenhuma tecnologia cadastrada no momento.
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="ps-4 fw-semibold text-white" style="font-size: 1.05rem;">@item.Nome</td>
+                                    <td><span class="badge bg-primary text-white px-3 py-2">@(item.CategoriaImpacto?.Nome ?? "N/A")</span></td>
+                                    <td><i class="bi bi-rocket-takeoff text-secondary me-2"></i><span class="text-white-50">@(item.Origem?.Nome ?? "Desconhecido")</span></td>
+                                    <td class="text-secondary">@item.DataCadastro.ToString("dd/MM/yyyy")</td>
+                                    <td class="text-end pe-4">
+                                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary rounded-pill me-1"><i class="bi bi-pencil-square"></i></a>
+                                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger rounded-pill"><i class="bi bi-trash3"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="5" class="text-center py-5 text-secondary">
+                                    Nenhuma tecnologia cadastrada no momento.
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>

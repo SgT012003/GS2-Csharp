@@ -1,0 +1,33 @@
+@model ProjetoGS.Web.Models.OrigemDTO
+
+@{
+    ViewData["Title"] = "Nova Origem";
+}
+
+<div class="row justify-content-center mt-5 animate-fade-up">
+    <div class="col-md-6">
+        <div class="glass-card">
+            <h3 class="fw-bold mb-4 text-white"><i class="bi bi-plus-circle me-2 text-primary"></i>Nova Origem Espacial</h3>
+            <form asp-action="Create">
+                <div class="mb-4">
+                    <label asp-for="Nome" class="form-label">Nome da Missão ou Origem</label>
+                    <input asp-for="Nome" class="form-control" placeholder="Ex: Missão Apollo" required />
+                    <span asp-validation-for="Nome" class="text-danger"></span>
+                </div>
+                <div class="mb-4">
+                    <label asp-for="Descricao" class="form-label">Descrição Breve</label>
+                    <textarea asp-for="Descricao" class="form-control" rows="3" placeholder="Detalhes sobre esta origem..." required></textarea>
+                    <span asp-validation-for="Descricao" class="text-danger"></span>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mt-5">
+                    <a asp-action="Index" class="btn btn-outline-secondary rounded-pill px-4">Voltar</a>
+                    <button type="submit" class="btn btn-primary rounded-pill px-4">Cadastrar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

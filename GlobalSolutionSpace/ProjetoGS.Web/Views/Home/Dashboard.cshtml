@@ -1,0 +1,124 @@
+@model ProjetoGS.Web.Models.DashboardViewModel
+@using System.Text.Json
+
+@{
+    ViewData["Title"] = "Dashboard - A Nova Economia Espacial";
+}
+
+<div class="row mb-5 mt-4">
+    <div class="col">
+        <h1 class="display-4 fw-bold mb-2"><span class="text-gradient">Dashboard de Impacto</span></h1>
+        <p class="lead text-secondary">Visão geral da evolução e distribuição das inovações espaciais.</p>
+    </div>
+</div>
+
+<div class="row g-4 mb-5">
+    <div class="col-md-4">
+        <div class="glass-card text-center h-100 d-flex flex-column justify-content-center animate-fade-up">
+            <h5 class="text-uppercase fw-bold text-secondary mb-3" style="letter-spacing: 1px; font-size: 0.9rem;">Tecnologias Cadastradas</h5>
+            <h2 class="display-1 fw-bold text-gradient mb-0">@Model.TotalTecnologias</h2>
+        </div>
+    </div>
+    
+    <div class="col-md-8">
+        <div class="glass-card h-100 animate-fade-up delay-100">
+            <h5 class="fw-bold text-secondary mb-4" style="letter-spacing: 0.5px;">Distribuição por Setor de Impacto</h5>
+            <div id="impactChart"></div>
+            @if (!Model.PorSetor.Any())
+            {
+                <p class="text-secondary fst-italic text-center mt-4">Nenhum dado cadastrado.</p>
+            }
+        </div>
+    </div>
+</div>
+
+<div class="row animate-fade-up delay-200">
+    <div class="col-12">
+        <div class="glass-card p-0 overflow-hidden">
+            <div class="p-4 border-bottom" style="border-color: var(--border-color) !important;">
+                <h5 class="fw-bold mb-0 text-white"><i class="bi bi-activity me-2" style="color: var(--secondary-color);"></i>Últimos Cadastros</h5>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th class="ps-4">ID</th>
+                            <th>Tecnologia</th>
+                            <th>Origem</th>
+                            <th class="pe-4 text-end">Data de Cadastro</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var tech in Model.UltimasCadastradas)
+                        {
+                            <tr>
+                                <td class="ps-4"><span class="badge bg-primary text-white">#@tech.Id</span></td>
+                                <td class="fw-semibold text-white">@tech.Nome</td>
+                                <td><i class="bi bi-rocket me-2" style="color: var(--secondary-color);"></i>@tech.OrigemNome</td>
+                                <td class="text-secondary pe-4 text-end">@tech.DataCadastro.ToString("dd/MM/yyyy HH:mm")</td>
+                            </tr>
+                        }
+                        @if (!Model.UltimasCadastradas.Any())
+                        {
+                            <tr>
+                                <td colspan="4" class="text-center text-secondary py-5">
+                                    Nenhuma inovação encontrada.
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var chartData = @Html.Raw(JsonSerializer.Serialize(Model.PorSetor.Select(s => s.Quantidade)));
+            var chartLabels = @Html.Raw(JsonSerializer.Serialize(Model.PorSetor.Select(s => s.Setor)));
+
+            if (chartData.length > 0) {
+                var options = {
+                    series: chartData,
+                    labels: chartLabels,
+                    chart: {
+                        type: 'donut',
+                        height: 300,
+                        background: 'transparent'
+                    },
+                    theme: {
+                        mode: 'dark'
+                    },
+                    colors: ['#4f46e5', '#06b6d4', '#f43f5e', '#8b5cf6', '#10b981'],
+                    plotOptions: {
+                        pie: {
+                            donut: {
+                                size: '75%',
+                                background: 'transparent'
+                            }
+                        }
+                    },
+                    stroke: {
+                        show: true,
+                        colors: ['var(--surface-color)'],
+                        width: 3
+                    },
+                    dataLabels: {
+                        enabled: false
+                    },
+                    legend: {
+                        position: 'right',
+                        offsetY: 0,
+                        height: 230,
+                        fontFamily: 'Outfit'
+                    }
+                };
+
+                var chart = new ApexCharts(document.querySelector("#impactChart"), options);
+                chart.render();
+            }
+        });
+    </script>
+}

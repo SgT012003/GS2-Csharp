@@ -13,6 +13,7 @@ builder.Services.AddProblemDetails();
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+builder.Services.AddControllers();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") 
     ?? "Server=localhost;Database=gs_db;Uid=root;Pwd=root;";
@@ -21,6 +22,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseMySql(connectionString, ServerVersion.Parse("8.0.36-mysql")));
 
 builder.Services.AddScoped<ITecnologiaRepository, TecnologiaRepository>();
+builder.Services.AddScoped<ICategoriaRepository, CategoriaRepository>();
 builder.Services.AddScoped<ProjetoGS.ApiService.Services.IAuthService, ProjetoGS.ApiService.Services.AuthService>();
 
 var app = builder.Build();
@@ -52,6 +54,7 @@ app.MapGet("/weatherforecast", () =>
 .WithName("GetWeatherForecast");
 
 app.MapDefaultEndpoints();
+app.MapControllers();
 
 app.Run();
 

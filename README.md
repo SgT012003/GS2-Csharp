@@ -38,30 +38,34 @@ The solution is divided into the following modules under the `GlobalSolutionSpac
 
 ---
 
-## Initialization & Docker Support
+## Installation and Execution Procedure (Initialization)
 
 ### Prerequisites
-1. **.NET SDK (8.0+)** installed.
-2. **Docker Desktop** (For fast local testing without installing MySQL).
+1. **.NET SDK (8.0, 9.0, or 10.0)** installed. (The project currently uses .NET 10).
+2. **MySQL** server running locally (Default port 3306).
+3. Visual Studio 2022, VS Code, or Rider.
 
-### Running via Docker (Development & Testing)
-We have configured a `docker-compose.yml` for you to run the entire system instantly without local databases.
-1. Open a terminal at the root directory where `docker-compose.yml` is located.
-2. Run:
-   ```bash
-   docker-compose up --build -d
-   ```
-3. The system will start, automatically run the database migrations, and **Seed** the initial data (Default Origins and Administrator Account).
+### Local Initialization Steps
 
-### Starting Locally with Aspire
-If you prefer running locally without Docker:
-1. Ensure your MySQL is running and update the `appsettings.json` Connection String inside `ProjetoGS.ApiService`.
-2. Navigate to the AppHost folder:
-   ```bash
-   cd GlobalSolutionSpace/GlobalSolutionSpace.AppHost
-   dotnet run
-   ```
-3. The **.NET Aspire Dashboard** will open. Click the `webfrontend` link.
+1. **Database Configuration**
+   - Access `ProjetoGS.ApiService/appsettings.json` and verify the `DefaultConnection` Connection String.
+   - By default, it will look for: `Server=localhost;Database=gs_db;Uid=root;Pwd=root;`. Modify according to your local MySQL user/password.
+
+2. **Applying the Migration**
+   - To create the schema in your local database, open a terminal at the root of `GlobalSolutionSpace/ProjetoGS.ApiService` and run:
+     ```bash
+     dotnet ef database update
+     ```
+
+3. **Starting the Solution with Aspire**
+   - Instead of starting the API and Web separately, you will always start the orchestrator.
+   - Navigate to the AppHost folder:
+     ```bash
+     cd GlobalSolutionSpace/GlobalSolutionSpace.AppHost
+     dotnet run
+     ```
+   - The console will display a URL for the **.NET Aspire Dashboard**. Open it in the browser to see the application map and access real-time logs.
+   - The system will start, automatically run any pending database migrations, and **Seed** the initial data (Default Origins, Impacts and Administrator Account).
 
 ---
 

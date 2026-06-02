@@ -1,8 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;600;800;900&display=swap');
 
 :root {
-  --bg-color: #060913; /* Deep space dark */
-  --surface-color: #101423; /* Glass surface */
+  --bg-color: #060913;
+  /* Deep space dark */
+  --surface-color: #101423;
+  /* Glass surface */
   --surface-hover: #171c2e;
   --primary-gradient: linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%);
   --primary-color: #4f46e5;
@@ -18,17 +20,28 @@
 
 body {
   background-color: var(--bg-color);
-  background-image: 
+  background-image:
     radial-gradient(circle at 15% 50%, rgba(79, 70, 229, 0.08), transparent 25%),
     radial-gradient(circle at 85% 30%, rgba(6, 182, 212, 0.08), transparent 25%);
   background-attachment: fixed;
   color: var(--text-primary);
   font-family: 'Inter', sans-serif;
-  margin-bottom: 60px;
   overflow-x: hidden;
 }
 
-h1, h2, h3, h4, h5, h6, .display-1, .display-2, .display-3, .display-4, .display-5, .display-6, .navbar-brand {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.display-1,
+.display-2,
+.display-3,
+.display-4,
+.display-5,
+.display-6,
+.navbar-brand {
   font-family: 'Outfit', sans-serif;
 }
 
@@ -45,7 +58,7 @@ h1, h2, h3, h4, h5, h6, .display-1, .display-2, .display-3, .display-4, .display
 }
 
 .glass-card:hover {
-  border-color: rgba(255,255,255,0.15);
+  border-color: rgba(255, 255, 255, 0.15);
   box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.4);
 }
 
@@ -65,12 +78,14 @@ h1, h2, h3, h4, h5, h6, .display-1, .display-2, .display-3, .display-4, .display
   border-bottom: 1px solid var(--border-color) !important;
   padding: 1rem 0;
 }
+
 .navbar-brand {
   color: var(--text-primary) !important;
   font-weight: 800;
   letter-spacing: -0.5px;
   font-size: 1.4rem;
 }
+
 .nav-link {
   color: var(--text-secondary) !important;
   font-weight: 500;
@@ -78,9 +93,11 @@ h1, h2, h3, h4, h5, h6, .display-1, .display-2, .display-3, .display-4, .display
   padding: 0.5rem 1rem !important;
   border-radius: 8px;
 }
-.nav-link:hover, .nav-link.active {
+
+.nav-link:hover,
+.nav-link.active {
   color: var(--text-primary) !important;
-  background: rgba(255,255,255,0.05);
+  background: rgba(255, 255, 255, 0.05);
 }
 
 /* Premium Buttons */
@@ -96,11 +113,13 @@ h1, h2, h3, h4, h5, h6, .display-1, .display-2, .display-3, .display-4, .display
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
 }
+
 .btn-primary:hover {
   transform: translateY(-2px) scale(1.02);
   box-shadow: var(--glow-shadow);
   color: white;
 }
+
 .btn-outline-primary {
   background: transparent;
   border: 1px solid var(--primary-color);
@@ -109,6 +128,7 @@ h1, h2, h3, h4, h5, h6, .display-1, .display-2, .display-3, .display-4, .display
   font-weight: 600;
   transition: all 0.3s ease;
 }
+
 .btn-outline-primary:hover {
   background: rgba(79, 70, 229, 0.1);
   border-color: var(--primary-color);
@@ -118,11 +138,17 @@ h1, h2, h3, h4, h5, h6, .display-1, .display-2, .display-3, .display-4, .display
 
 /* High Contrast Tables */
 .table {
-  color: var(--text-primary);
+  --bs-table-bg: transparent;
+  --bs-table-color: var(--text-secondary);
+  --bs-table-striped-bg: transparent;
+  --bs-table-hover-bg: transparent;
+  color: var(--text-secondary);
   border-collapse: separate;
   border-spacing: 0 8px;
-  margin-top: -8px; /* Offset spacing */
+  margin-top: -8px;
+  /* Offset spacing */
 }
+
 .table thead th {
   border: none;
   color: var(--text-secondary);
@@ -133,35 +159,45 @@ h1, h2, h3, h4, h5, h6, .display-1, .display-2, .display-3, .display-4, .display
   letter-spacing: 1px;
   padding: 1rem 1.5rem;
 }
+
 .table tbody tr {
-  background: var(--surface-color);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  background: transparent;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   transition: all 0.2s ease;
 }
+
 .table tbody tr td {
+  background-color: var(--surface-color) !important;
+  color: #cbd5e1 !important;
+  /* Soft light blue/gray, never pure white */
   border: none;
   padding: 1.25rem 1.5rem;
   vertical-align: middle;
   border-top: 1px solid transparent;
   border-bottom: 1px solid transparent;
 }
+
 .table tbody tr td:first-child {
   border-top-left-radius: 12px;
   border-bottom-left-radius: 12px;
   border-left: 1px solid transparent;
 }
+
 .table tbody tr td:last-child {
   border-top-right-radius: 12px;
   border-bottom-right-radius: 12px;
   border-right: 1px solid transparent;
 }
+
 .table tbody tr:hover {
   background: var(--surface-hover);
   transform: scale(1.01);
 }
+
 .table tbody tr:hover td {
-  border-color: rgba(255,255,255,0.08);
+  border-color: rgba(255, 255, 255, 0.08);
 }
+
 .table tbody tr:hover td:first-child {
   border-left-color: var(--primary-color);
 }
@@ -174,6 +210,7 @@ h1, h2, h3, h4, h5, h6, .display-1, .display-2, .display-3, .display-4, .display
   border-radius: 6px;
   letter-spacing: 0.5px;
 }
+
 .bg-primary {
   background: rgba(79, 70, 229, 0.2) !important;
   color: #a5b4fc !important;
@@ -181,7 +218,8 @@ h1, h2, h3, h4, h5, h6, .display-1, .display-2, .display-3, .display-4, .display
 }
 
 /* Inputs */
-.form-control, .form-select {
+.form-control,
+.form-select {
   background-color: var(--surface-color);
   border: 1px solid var(--border-color);
   color: var(--text-primary);
@@ -189,12 +227,15 @@ h1, h2, h3, h4, h5, h6, .display-1, .display-2, .display-3, .display-4, .display
   padding: 0.75rem 1rem;
   transition: all 0.3s ease;
 }
-.form-control:focus, .form-select:focus {
+
+.form-control:focus,
+.form-select:focus {
   background-color: var(--surface-color);
   color: white;
   border-color: var(--primary-color);
   box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15);
 }
+
 .form-label {
   color: var(--text-secondary);
   font-family: 'Outfit', sans-serif;
@@ -210,11 +251,13 @@ h1, h2, h3, h4, h5, h6, .display-1, .display-2, .display-3, .display-4, .display
   background: var(--surface-color);
   backdrop-filter: blur(10px);
 }
+
 .alert-danger {
   background: rgba(244, 63, 94, 0.1);
   color: #fda4af;
   border-color: rgba(244, 63, 94, 0.2);
 }
+
 .alert-success {
   background: rgba(16, 185, 129, 0.1);
   color: #6ee7b7;
@@ -223,16 +266,33 @@ h1, h2, h3, h4, h5, h6, .display-1, .display-2, .display-3, .display-4, .display
 
 /* Landing Page Animations */
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
+
 .animate-fade-up {
   animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   opacity: 0;
 }
-.delay-100 { animation-delay: 100ms; }
-.delay-200 { animation-delay: 200ms; }
-.delay-300 { animation-delay: 300ms; }
+
+.delay-100 {
+  animation-delay: 100ms;
+}
+
+.delay-200 {
+  animation-delay: 200ms;
+}
+
+.delay-300 {
+  animation-delay: 300ms;
+}
 
 /* Footer */
 .footer {

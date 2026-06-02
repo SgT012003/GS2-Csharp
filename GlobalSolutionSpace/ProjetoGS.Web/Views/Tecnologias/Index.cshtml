@@ -36,9 +36,9 @@
                             foreach (var item in Model)
                             {
                                 <tr>
-                                    <td class="ps-4 fw-semibold text-white" style="font-size: 1.05rem;">@item.Nome</td>
-                                    <td><span class="badge bg-primary text-white px-3 py-2">@(item.CategoriaImpacto?.Nome ?? "N/A")</span></td>
-                                    <td><i class="bi bi-rocket-takeoff text-secondary me-2"></i><span class="text-white-50">@(item.Origem?.Nome ?? "Desconhecido")</span></td>
+                                    <td class="ps-4 fw-semibold text-secondary" style="font-size: 1.05rem;">@item.Nome</td>
+                                    <td><span class="badge bg-primary text-secondary px-3 py-2">@(item.CategoriaImpacto?.Nome ?? "N/A")</span></td>
+                                    <td><i class="bi bi-rocket-takeoff text-secondary me-2"></i><span class="text-secondary">@(item.Origem?.Nome ?? "Desconhecido")</span></td>
                                     <td class="text-secondary">@item.DataCadastro.ToString("dd/MM/yyyy")</td>
                                     <td class="text-end pe-4">
                                         <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary rounded-pill me-1"><i class="bi bi-pencil-square"></i></a>

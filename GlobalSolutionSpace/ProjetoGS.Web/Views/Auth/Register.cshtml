@@ -1,0 +1,39 @@
+@model ProjetoGS.Web.Models.RegisterRequestDTO
+
+@{
+    ViewData["Title"] = "Criar Conta";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="glass-card">
+                <h3 class="fw-bold text-primary mb-4"><i class="bi bi-person-plus me-2"></i> Criar Nova Conta</h3>
+                
+                @if (ViewBag.ErrorMessage != null)
+                {
+                    <div class="alert alert-danger shadow-sm border-0">@ViewBag.ErrorMessage</div>
+                }
+
+                <form asp-action="Register" method="post">
+                    <div class="mb-3">
+                        <label asp-for="Nome" class="form-label text-secondary">Nome Completo</label>
+                        <input asp-for="Nome" class="form-control" required />
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Email" class="form-label text-secondary">E-mail</label>
+                        <input asp-for="Email" type="email" class="form-control" required />
+                    </div>
+                    <div class="mb-4">
+                        <label asp-for="Senha" class="form-label text-secondary">Senha</label>
+                        <input asp-for="Senha" type="password" class="form-control" required />
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary fw-bold">Cadastrar</button>
+                        <a asp-action="Login" class="btn btn-outline-secondary">Já tenho uma conta</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -24,6 +24,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddScoped<ITecnologiaRepository, TecnologiaRepository>();
 builder.Services.AddScoped<ICategoriaRepository, CategoriaRepository>();
 builder.Services.AddScoped<IOrigemRepository, OrigemRepository>();
+builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddScoped<ProjetoGS.ApiService.Services.IAuthService, ProjetoGS.ApiService.Services.AuthService>();
 
 var app = builder.Build();

@@ -1,0 +1,7 @@
+Equipe:
+Matheus Zottis  - RM: 94119
+Victor Didoff   - RM: 552965
+Vinicius Silva  - RM: 553240
+
+Link Repositorio:
+https://github.com/SgT012003/GS2-Csharp

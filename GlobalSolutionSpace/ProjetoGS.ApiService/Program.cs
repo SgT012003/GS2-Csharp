@@ -27,6 +27,9 @@ builder.Services.AddScoped<ProjetoGS.ApiService.Services.IAuthService, ProjetoGS
 
 var app = builder.Build();
 
+// Seed Database
+await ProjetoGS.ApiService.Data.DatabaseSeeder.SeedAsync(app.Services);
+
 // Configure the HTTP request pipeline.
 app.UseExceptionHandler();
 

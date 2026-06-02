@@ -1,3 +1,7 @@
+using Microsoft.EntityFrameworkCore;
+using ProjetoGS.ApiService.Data;
+using ProjetoGS.ApiService.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add service defaults & Aspire client integrations.
@@ -6,9 +10,6 @@ builder.AddServiceDefaults();
 // Add services to the container.
 builder.Services.AddProblemDetails();
 
-using Microsoft.EntityFrameworkCore;
-using ProjetoGS.ApiService.Data;
-using ProjetoGS.ApiService.Repositories;
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
@@ -17,7 +18,7 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
     ?? "Server=localhost;Database=gs_db;Uid=root;Pwd=root;";
 
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+    options.UseMySql(connectionString, ServerVersion.Parse("8.0.36-mysql")));
 
 builder.Services.AddScoped<ITecnologiaRepository, TecnologiaRepository>();
 

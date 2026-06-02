@@ -6,9 +6,30 @@ namespace ProjetoGS.Web.Controllers;
 
 public class HomeController : Controller
 {
-    public IActionResult Index()
+    private readonly HttpClient _httpClient;
+
+    public HomeController(IHttpClientFactory httpClientFactory)
     {
-        return View();
+        _httpClient = httpClientFactory.CreateClient("api");
+    }
+
+    public async Task<IActionResult> Index()
+    {
+        DashboardViewModel? stats = null;
+        try
+        {
+            var response = await _httpClient.GetAsync("/api/tecnologias/stats");
+            if (response.IsSuccessStatusCode)
+            {
+                stats = await response.Content.ReadFromJsonAsync<DashboardViewModel>();
+            }
+        }
+        catch (Exception)
+        {
+            // API not available yet or DB error
+        }
+
+        return View(stats ?? new DashboardViewModel());
     }
 
     public IActionResult Privacy()

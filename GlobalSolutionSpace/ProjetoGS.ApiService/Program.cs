@@ -13,7 +13,10 @@ builder.Services.AddProblemDetails();
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options => 
+{
+    options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+});
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") 
     ?? "Server=localhost;Database=gs_db;Uid=root;Pwd=root;";
@@ -30,8 +33,6 @@ builder.Services.AddScoped<ProjetoGS.ApiService.Services.IAuthService, ProjetoGS
 builder.Services.AddScoped<ProjetoGS.ApiService.Data.DatabaseSeeder>();
 
 var app = builder.Build();
-
-app.MapDefaultEndpoints();
 
 using (var scope = app.Services.CreateScope())
 {

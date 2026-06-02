@@ -15,12 +15,12 @@ public class TecnologiaRepository : ITecnologiaRepository
 
     public async Task<IEnumerable<Tecnologia>> GetAllAsync()
     {
-        return await _context.Tecnologias.Include(t => t.CategoriaImpacto).ToListAsync();
+        return await _context.Tecnologias.Include(t => t.CategoriaImpacto).Include(t => t.Origem).ToListAsync();
     }
 
     public async Task<Tecnologia?> GetByIdAsync(int id)
     {
-        return await _context.Tecnologias.Include(t => t.CategoriaImpacto).FirstOrDefaultAsync(t => t.Id == id);
+        return await _context.Tecnologias.Include(t => t.CategoriaImpacto).Include(t => t.Origem).FirstOrDefaultAsync(t => t.Id == id);
     }
 
     public async Task<Tecnologia> AddAsync(Tecnologia tecnologia)
@@ -48,6 +48,6 @@ public class TecnologiaRepository : ITecnologiaRepository
 
     public async Task<IEnumerable<Tecnologia>> GetStatsAsync()
     {
-        return await _context.Tecnologias.Include(t => t.CategoriaImpacto).ToListAsync();
+        return await _context.Tecnologias.Include(t => t.CategoriaImpacto).Include(t => t.Origem).ToListAsync();
     }
 }

@@ -1,8 +1,11 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using ProjetoGS.Web.Models;
 
 namespace ProjetoGS.Web.Controllers;
 
+[Authorize(Roles = "Administrador")]
 public class TecnologiasController : Controller
 {
     private readonly HttpClient _httpClient;
@@ -12,50 +15,106 @@ public class TecnologiasController : Controller
         _httpClient = httpClientFactory.CreateClient("api");
     }
 
+    private List<SelectListItem> GetOrigensEspaciais()
+    {
+        return new List<SelectListItem>
+        {
+            new SelectListItem { Value = "Missão Apollo", Text = "Missão Apollo" },
+            new SelectListItem { Value = "Estação Espacial Internacional (ISS)", Text = "Estação Espacial Internacional (ISS)" },
+            new SelectListItem { Value = "Satélites de Observação", Text = "Satélites de Observação" },
+            new SelectListItem { Value = "Missão Artemis", Text = "Missão Artemis" },
+            new SelectListItem { Value = "Sondas Interplanetárias", Text = "Sondas Interplanetárias" },
+            new SelectListItem { Value = "Outros", Text = "Outros" }
+        };
+    }
+
+    private async Task PopulateCategoriasViewBagAsync(int? selectedId = null)
+    {
+        var categorias = await _httpClient.GetFromJsonAsync<IEnumerable<CategoriaImpactoDTO>>("/api/categorias");
+        ViewBag.Categorias = new SelectList(categorias, "Id", "Nome", selectedId);
+    }
+
     public async Task<IActionResult> Index()
     {
-        // Example of fetching from API
-        // var response = await _httpClient.GetAsync("/api/tecnologias");
-        // var tecnologias = await response.Content.ReadFromJsonAsync<IEnumerable<Tecnologia>>();
-        return View();
+        var tecnologias = await _httpClient.GetFromJsonAsync<IEnumerable<TecnologiaDTO>>("/api/tecnologias");
+        return View(tecnologias);
     }
 
-    [Authorize(Roles = "Administrador")]
-    public IActionResult Create()
+    public async Task<IActionResult> Create()
     {
-        return View();
-    }
-
-    [HttpPost]
-    [Authorize(Roles = "Administrador")]
-    public IActionResult Create(object model)
-    {
-        return RedirectToAction(nameof(Index));
-    }
-
-    [Authorize(Roles = "Administrador")]
-    public IActionResult Edit(int id)
-    {
+        ViewBag.Origens = GetOrigensEspaciais();
+        await PopulateCategoriasViewBagAsync();
         return View();
     }
 
     [HttpPost]
-    [Authorize(Roles = "Administrador")]
-    public IActionResult Edit(int id, object model)
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Create(TecnologiaDTO model)
     {
-        return RedirectToAction(nameof(Index));
+        if (ModelState.IsValid)
+        {
+            model.DataCadastro = DateTime.UtcNow;
+            var response = await _httpClient.PostAsJsonAsync("/api/tecnologias", model);
+            if (response.IsSuccessStatusCode)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            ModelState.AddModelError(string.Empty, "Erro ao criar registro na API.");
+        }
+
+        ViewBag.Origens = GetOrigensEspaciais();
+        await PopulateCategoriasViewBagAsync(model.CategoriaImpactoId);
+        return View(model);
     }
 
-    [Authorize(Roles = "Administrador")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Edit(int id)
     {
-        return View();
+        var tecnologia = await _httpClient.GetFromJsonAsync<TecnologiaDTO>($"/api/tecnologias/{id}");
+        if (tecnologia == null) return NotFound();
+
+        ViewBag.Origens = GetOrigensEspaciais();
+        await PopulateCategoriasViewBagAsync(tecnologia.CategoriaImpactoId);
+        return View(tecnologia);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Edit(int id, TecnologiaDTO model)
+    {
+        if (id != model.Id) return BadRequest();
+
+        if (ModelState.IsValid)
+        {
+            var response = await _httpClient.PutAsJsonAsync($"/api/tecnologias/{id}", model);
+            if (response.IsSuccessStatusCode)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            ModelState.AddModelError(string.Empty, "Erro ao atualizar registro na API.");
+        }
+
+        ViewBag.Origens = GetOrigensEspaciais();
+        await PopulateCategoriasViewBagAsync(model.CategoriaImpactoId);
+        return View(model);
+    }
+
+    public async Task<IActionResult> Delete(int id)
+    {
+        var tecnologia = await _httpClient.GetFromJsonAsync<TecnologiaDTO>($"/api/tecnologias/{id}");
+        if (tecnologia == null) return NotFound();
+
+        return View(tecnologia);
     }
 
     [HttpPost, ActionName("Delete")]
-    [Authorize(Roles = "Administrador")]
-    public IActionResult DeleteConfirmed(int id)
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> DeleteConfirmed(int id)
     {
-        return RedirectToAction(nameof(Index));
+        var response = await _httpClient.DeleteAsync($"/api/tecnologias/{id}");
+        if (response.IsSuccessStatusCode)
+        {
+            return RedirectToAction(nameof(Index));
+        }
+        return BadRequest();
     }
 }

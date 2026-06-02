@@ -38,115 +38,52 @@ The solution is divided into the following modules under the `GlobalSolutionSpac
 
 ---
 
-## Installation and Execution Procedure (Initialization)
+## Initialization & Docker Support
 
 ### Prerequisites
-1. **.NET SDK (8.0, 9.0, or 10.0)** installed. (The project currently uses .NET 10).
-2. **MySQL** server running locally (Default port 3306).
-3. Visual Studio 2022, VS Code, or Rider.
+1. **.NET SDK (8.0+)** installed.
+2. **Docker Desktop** (For fast local testing without installing MySQL).
 
-### Local Initialization Steps
-
-1. **Database Configuration**
-   - Access `ProjetoGS.ApiService/appsettings.json` and verify the `DefaultConnection` Connection String.
-   - By default, it will look for: `Server=localhost;Database=gs_db;Uid=root;Pwd=root;`. Modify according to your local MySQL user/password.
-
-2. **Applying the Migration**
-   - To create the schema in your local database, open a terminal at the root of `GlobalSolutionSpace/ProjetoGS.ApiService` and run:
-     ```bash
-     dotnet ef database update
-     ```
-
-3. **Starting the Solution with Aspire**
-   - Instead of starting the API and Web separately, you will always start the orchestrator.
-   - Navigate to the AppHost folder:
-     ```bash
-     cd GlobalSolutionSpace/GlobalSolutionSpace.AppHost
-     dotnet run
-     ```
-   - The console will display a URL for the **.NET Aspire Dashboard**. Open it in the browser to see the application map and access real-time logs.
-
----
-
-## Deployment Guide (Publishing)
-
-To deploy on traditional IIS servers or cloud (Azure App Service, AWS, etc.):
-
-1. **Production Build Generation**
-   Run the publish command on the individual projects:
+### Running via Docker (Development & Testing)
+We have configured a `docker-compose.yml` for you to run the entire system instantly without local databases.
+1. Open a terminal at the root directory where `docker-compose.yml` is located.
+2. Run:
    ```bash
-   dotnet publish ProjetoGS.ApiService -c Release -o ./publish/api
-   dotnet publish ProjetoGS.Web -c Release -o ./publish/web
+   docker-compose up --build -d
    ```
-2. **Hosting**
-   - For IIS, create two separate *Application Pools*, point each site to its respective `/publish` folder.
-   - Modify the `appsettings.json` of `ProjetoGS.Web` (production version) so that the API URL stops using the internal Service Discovery (`http://apiservice`) and points to the actual public URL of your API (e.g., `https://api.novaeconomia.com.br`).
+3. The system will start, automatically run the database migrations, and **Seed** the initial data (Default Origins and Administrator Account).
+
+### Starting Locally with Aspire
+If you prefer running locally without Docker:
+1. Ensure your MySQL is running and update the `appsettings.json` Connection String inside `ProjetoGS.ApiService`.
+2. Navigate to the AppHost folder:
+   ```bash
+   cd GlobalSolutionSpace/GlobalSolutionSpace.AppHost
+   dotnet run
+   ```
+3. The **.NET Aspire Dashboard** will open. Click the `webfrontend` link.
 
 ---
 
-## API Endpoints Examples
+## Authentication & Default Credentials
 
-The `ApiService` exposes routes for the Technologies entity. The endpoints use standard JSON format.
-
-### 1. Create a Technology (POST)
-**Endpoint:** `POST /api/tecnologias`
-```json
-{
-  "nome": "CMOS Image Sensors",
-  "descricao": "Miniaturized technology inherited from telescopes, now in cell phones.",
-  "origemEspacial": "NASA planetary exploration missions",
-  "categoriaImpactoId": 1
-}
-```
-
-### 2. Fetch Technologies (GET)
-**Endpoint:** `GET /api/tecnologias`
-**Response:**
-```json
-[
-  {
-    "id": 1,
-    "nome": "CMOS Image Sensors",
-    "descricao": "Miniaturized technology...",
-    "origemEspacial": "NASA planetary exploration missions",
-    "dataCadastro": "2026-06-02T15:30:00Z",
-    "categoriaImpactoId": 1,
-    "categoriaImpacto": null
-  }
-]
-```
-
-### 3. Statistics Endpoint / Dashboard
-**Endpoint:** `GET /api/tecnologias/stats`
-This custom endpoint aggregates data using LINQ to feed the Dashboard in real-time.
-**Response:**
-```json
-{
-  "totalTecnologias": 150,
-  "porSetor": [
-    { "setor": "Health", "quantidade": 50 },
-    { "setor": "Agriculture", "quantidade": 75 },
-    { "setor": "Consumption", "quantidade": 25 }
-  ],
-  "ultimasCadastradas": [
-    {
-      "id": 150,
-      "nome": "Water Purifiers",
-      "origemEspacial": "Apollo 11",
-      "dataCadastro": "2026-06-02T16:00:00Z"
-    }
-  ]
-}
-```
+The system employs a strict Authentication loop. Only logged-in users can access the **Dashboard** and CRUD operations.
+To test the system immediately, the Seeder provides a default admin account:
+- **Email:** `admin@novaeconomia.space`
+- **Password:** `Admin@123`
 
 ---
 
-## First Access Example (Front-End MVC)
+## Architecture & Visual Identity (Antigravity UI)
 
-1. When you initialize the project and click the `webfrontend` endpoint via the Aspire Dashboard, you will be taken to the **Home Page (Dashboard)**.
-2. The system will immediately make an asynchronous call to the `/stats` endpoint of the API, displaying:
-   - A Main Card with the absolute sum.
-   - Bootstrap 5 style Progress Bars calculating the mathematical percentage of each sector's size against the total.
-   - The responsive table (grid) below containing the Top 5 most recent registrations.
-3. **Administrative Access**: 
-   - Some routes (`/Tecnologias/Create`, `/Tecnologias/Delete`) are strictly closed. If the user tries to access the Registration screen without a valid Cookie with the `Administrator` Claim, they will be automatically redirected to the MVC Login screen.
+### Backend (ProjetoGS.ApiService)
+- Exposes routes for `Tecnologias`, `Origens`, and `Usuarios`.
+- `Origens` is fully decoupled from free-text, enforcing a relational database structure (e.g., ISS, Apollo, Hubble).
+
+### Frontend (ProjetoGS.Web)
+- **Landing Page vs Dashboard:** The entry point (`/`) is a premium Landing Page. The statistical graphs and data are securely gated behind the `/Home/Dashboard` route, requiring authentication.
+- **"Antigravity" Aesthetic:** We implemented a high-end UI design system focusing on:
+  - **Glassmorphism:** Frosted glass effect for cards and panels.
+  - **Dark Space Theme:** Deep Indigo and Cyan radial gradients.
+  - **Micro-Animations:** Fluid CSS fade-up animations and hover scaling for high-contrast tables.
+  - **ApexCharts Integration:** Data is now visualized interactively through animated Donut Charts replacing standard progress bars.

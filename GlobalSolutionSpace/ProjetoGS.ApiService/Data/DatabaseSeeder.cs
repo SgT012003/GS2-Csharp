@@ -42,11 +42,11 @@ public class DatabaseSeeder
                 new CategoriaImpacto { Nome = "Sustentabilidade", Descricao = "Gerenciamento de recursos naturais e energia" }
             };
 
-            await context.Categorias.AddRangeAsync(categorias);
-            await context.SaveChangesAsync();
+            await _context.Categorias.AddRangeAsync(categorias);
+            await _context.SaveChangesAsync();
         }
 
-        if (!await context.Origens.AnyAsync())
+        if (!await _context.Origens.AnyAsync())
         {
             var origens = new List<Origem>
             {
@@ -57,14 +57,14 @@ public class DatabaseSeeder
                 new Origem { Nome = "Sondas Interplanetárias", Descricao = "Naves não tripuladas enviadas para explorar o sistema solar." },
                 new Origem { Nome = "Outros", Descricao = "Outras origens espaciais." }
             };
-            await context.Origens.AddRangeAsync(origens);
-            await context.SaveChangesAsync();
+            await _context.Origens.AddRangeAsync(origens);
+            await _context.SaveChangesAsync();
         }
 
-        if (!await context.Tecnologias.AnyAsync())
+        if (!await _context.Tecnologias.AnyAsync())
         {
-            var categorias = await context.Categorias.ToListAsync();
-            var origens = await context.Origens.ToListAsync();
+            var categorias = await _context.Categorias.ToListAsync();
+            var origens = await _context.Origens.ToListAsync();
             
             var tecnologias = new List<Tecnologia>
             {
@@ -94,8 +94,8 @@ public class DatabaseSeeder
                 }
             };
 
-            await context.Tecnologias.AddRangeAsync(tecnologias);
-            await context.SaveChangesAsync();
+            await _context.Tecnologias.AddRangeAsync(tecnologias);
+            await _context.SaveChangesAsync();
         }
     }
 }

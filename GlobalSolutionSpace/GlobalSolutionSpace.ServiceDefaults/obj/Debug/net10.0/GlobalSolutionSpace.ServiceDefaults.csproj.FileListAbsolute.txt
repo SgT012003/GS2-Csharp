@@ -11,3 +11,16 @@ C:\Users\Victor Didoff\Downloads\GS2-Csharp\GlobalSolutionSpace\GlobalSolutionSp
 C:\Users\Victor Didoff\Downloads\GS2-Csharp\GlobalSolutionSpace\GlobalSolutionSpace.ServiceDefaults\obj\Debug\net10.0\refint\GlobalSolutionSpace.ServiceDefaults.dll
 C:\Users\Victor Didoff\Downloads\GS2-Csharp\GlobalSolutionSpace\GlobalSolutionSpace.ServiceDefaults\obj\Debug\net10.0\GlobalSolutionSpace.ServiceDefaults.pdb
 C:\Users\Victor Didoff\Downloads\GS2-Csharp\GlobalSolutionSpace\GlobalSolutionSpace.ServiceDefaults\obj\Debug\net10.0\ref\GlobalSolutionSpace.ServiceDefaults.dll
+C:\Users\SgT01\Desktop\GS2-Csharp\GlobalSolutionSpace\GlobalSolutionSpace.ServiceDefaults\bin\Debug\net10.0\GlobalSolutionSpace.ServiceDefaults.deps.json
+C:\Users\SgT01\Desktop\GS2-Csharp\GlobalSolutionSpace\GlobalSolutionSpace.ServiceDefaults\bin\Debug\net10.0\GlobalSolutionSpace.ServiceDefaults.dll
+C:\Users\SgT01\Desktop\GS2-Csharp\GlobalSolutionSpace\GlobalSolutionSpace.ServiceDefaults\bin\Debug\net10.0\GlobalSolutionSpace.ServiceDefaults.pdb
+C:\Users\SgT01\Desktop\GS2-Csharp\GlobalSolutionSpace\GlobalSolutionSpace.ServiceDefaults\obj\Debug\net10.0\GlobalSolutionSpace.ServiceDefaults.csproj.AssemblyReference.cache
+C:\Users\SgT01\Desktop\GS2-Csharp\GlobalSolutionSpace\GlobalSolutionSpace.ServiceDefaults\obj\Debug\net10.0\GlobalSolutionSpace.ServiceDefaults.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\SgT01\Desktop\GS2-Csharp\GlobalSolutionSpace\GlobalSolutionSpace.ServiceDefaults\obj\Debug\net10.0\GlobalSolutionSpace.ServiceDefaults.AssemblyInfoInputs.cache
+C:\Users\SgT01\Desktop\GS2-Csharp\GlobalSolutionSpace\GlobalSolutionSpace.ServiceDefaults\obj\Debug\net10.0\GlobalSolutionSpace.ServiceDefaults.AssemblyInfo.cs
+C:\Users\SgT01\Desktop\GS2-Csharp\GlobalSolutionSpace\GlobalSolutionSpace.ServiceDefaults\obj\Debug\net10.0\GlobalSolutionSpace.ServiceDefaults.csproj.CoreCompileInputs.cache
+C:\Users\SgT01\Desktop\GS2-Csharp\GlobalSolutionSpace\GlobalSolutionSpace.ServiceDefaults\obj\Debug\net10.0\GlobalSolutionSpace.ServiceDefaults.sourcelink.json
+C:\Users\SgT01\Desktop\GS2-Csharp\GlobalSolutionSpace\GlobalSolutionSpace.ServiceDefaults\obj\Debug\net10.0\GlobalSolutionSpace.ServiceDefaults.dll
+C:\Users\SgT01\Desktop\GS2-Csharp\GlobalSolutionSpace\GlobalSolutionSpace.ServiceDefaults\obj\Debug\net10.0\refint\GlobalSolutionSpace.ServiceDefaults.dll
+C:\Users\SgT01\Desktop\GS2-Csharp\GlobalSolutionSpace\GlobalSolutionSpace.ServiceDefaults\obj\Debug\net10.0\GlobalSolutionSpace.ServiceDefaults.pdb
+C:\Users\SgT01\Desktop\GS2-Csharp\GlobalSolutionSpace\GlobalSolutionSpace.ServiceDefaults\obj\Debug\net10.0\ref\GlobalSolutionSpace.ServiceDefaults.dll

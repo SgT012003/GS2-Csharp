@@ -960,23 +960,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Victor Didoff\\.nuget\\packages\\": {},
+    "C:\\Users\\SgT01\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Victor Didoff\\Downloads\\GS2-Csharp\\GlobalSolutionSpace\\GlobalSolutionSpace.ServiceDefaults\\GlobalSolutionSpace.ServiceDefaults.csproj",
+      "projectUniqueName": "C:\\Users\\SgT01\\Desktop\\GS2-Csharp\\GlobalSolutionSpace\\GlobalSolutionSpace.ServiceDefaults\\GlobalSolutionSpace.ServiceDefaults.csproj",
       "projectName": "GlobalSolutionSpace.ServiceDefaults",
-      "projectPath": "C:\\Users\\Victor Didoff\\Downloads\\GS2-Csharp\\GlobalSolutionSpace\\GlobalSolutionSpace.ServiceDefaults\\GlobalSolutionSpace.ServiceDefaults.csproj",
-      "packagesPath": "C:\\Users\\Victor Didoff\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Victor Didoff\\Downloads\\GS2-Csharp\\GlobalSolutionSpace\\GlobalSolutionSpace.ServiceDefaults\\obj\\",
+      "projectPath": "C:\\Users\\SgT01\\Desktop\\GS2-Csharp\\GlobalSolutionSpace\\GlobalSolutionSpace.ServiceDefaults\\GlobalSolutionSpace.ServiceDefaults.csproj",
+      "packagesPath": "C:\\Users\\SgT01\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\SgT01\\Desktop\\GS2-Csharp\\GlobalSolutionSpace\\GlobalSolutionSpace.ServiceDefaults\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Victor Didoff\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\SgT01\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -985,6 +985,7 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {

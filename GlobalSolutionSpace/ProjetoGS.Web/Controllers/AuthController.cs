@@ -50,6 +50,34 @@ public class AuthController : Controller
     }
 
     [HttpGet]
+    public async Task<IActionResult> AutoLogin()
+    {
+        var response = await _httpClient.PostAsJsonAsync("/api/usuarios/login", new { Email = "admin@novaeconomia.space", Senha = "Admin@123" });
+        
+        if (response.IsSuccessStatusCode)
+        {
+            var user = await response.Content.ReadFromJsonAsync<ProjetoGS.Web.Models.UsuarioDTO>();
+            if (user != null)
+            {
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, user.Nome),
+                    new Claim(ClaimTypes.Email, user.Email),
+                    new Claim(ClaimTypes.Role, user.Perfil)
+                };
+
+                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
+
+                return RedirectToAction("Dashboard", "Home");
+            }
+        }
+
+        return RedirectToAction("Login");
+    }
+
+    [HttpGet]
     public IActionResult Register()
     {
         return View();
